@@ -1,9 +1,7 @@
 
 const inquirer = require("inquirer");
 const fs = require("fs");
-const Triangle = require("./lib/shapes");
-const Circle = require("./lib/shapes");
-const Square = require("./lib/shapes");
+const {Triangle, Circle, Square} = require("./lib/shapes.js");
 const SVG = require("./lib/svg");
 
 
@@ -14,12 +12,12 @@ function questionPrompt(){
                 name: "text",
                 type:"input",
                 message:"Please choose the text for the shape (3 character maximum)",
-                // validate: (text) => {
-                //     if (text.length > 3){
-                //         return "Please enter only 3 characters"
-                //     }
-                //     return text
-                // }
+                validate: (letters) => {
+                    if (letters.length > 3){
+                        return "Please enter only 3 characters"
+                    }
+                    return true
+                }
             },
             {
                 name: "color",
@@ -42,7 +40,7 @@ function questionPrompt(){
         ])
         .then(response => {
             const mySVG = new SVG()
-            mySVG.setText(response.text)
+            mySVG.setText(response.text, response.color)
 
             if (response.shape === "Triangle"){
                 const myTriangle = new Triangle()
@@ -59,7 +57,11 @@ function questionPrompt(){
                 mySquare.setColor(response.shape_color)
                 mySVG.setShape(mySquare)
             }
-        })
+
+            return fs.writeFile("logo.svg", mySVG.render(), (err) =>
+                err ? console.log(err) : console.log("Generated logo.svg")
+        );
+    })
 }
 
 questionPrompt();
