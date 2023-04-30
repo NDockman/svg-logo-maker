@@ -4,7 +4,7 @@ This program creates an svg file with a logo custom-made by the user. Users can 
 
 ## Link to the walkthrough video
 
-https://
+https://drive.google.com/file/d/1E7bETPU-ny08ZwdNqzYUnXUMGfRqpmLn/view
 
 ## Example of an SVG logo
 
